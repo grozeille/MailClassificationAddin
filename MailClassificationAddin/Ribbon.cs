@@ -121,25 +121,15 @@ namespace MailClassificationAddin
 
             Outlook.MAPIFolder sentMails = Globals.ThisAddIn.Application.Session.DefaultStore.GetDefaultFolder(Outlook.OlDefaultFolders.olFolderSentMail);
 
-            /*Stopwatch stopwatch = Stopwatch.StartNew();
-            var copyItems = new List<Outlook.MailItem>();
-            foreach (object item in items)
-            {
-                Outlook.MailItem mail = item as Outlook.MailItem;
-                copyItems.Add(mail);
-            }
-            stopwatch.Stop();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);*/
-
             var now = DateTime.Now;
-            //var oneMonthAgo = now.AddMonths(-1);
-            var maxDate = now.AddDays(-5);
+            var maxDate = now.AddMonths(-1);
 
             // extract all mails to learn which one is important
             log.Info("Start scanning mails until " + maxDate);
             Stopwatch stopwatch = Stopwatch.StartNew();
-            foreach (Outlook.MailItem mail in items)
+            foreach (var item in items)
             {
+                var mail = item as Outlook.MailItem;
                 if (mail != null)
                 {
                     // use the mail item
